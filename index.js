@@ -3,7 +3,10 @@ const app = express();
 require("dotenv").config();
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const passport = require("passport");
+const user = require("./routes/api/user")
 
+// middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false })); 
 
@@ -25,8 +28,6 @@ mongoose
 
 
 const PORT = process.env.PORT || 5000;
-
-
 app.get("/", (req,res) => {
     res.send("hello");
 });
@@ -40,4 +41,15 @@ app.post("/user",(req,res) => {
     res.send(req.body);
 })
 
-app.use('/api/user/',require("./routes/api/user"));
+// app.use('/api/user/',require("./routes/api/user"));
+app.use(passport.initialize());
+require("./middleware/passport")(passport);
+app.use("/api/user/",user)
+
+
+if (process.env.NODE_ENV === "production") {
+    app.use(express.static("client/build"));
+    app.get("*", (req, res) => {
+       res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+    });
+ }
