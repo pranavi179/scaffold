@@ -3,7 +3,6 @@ const app = express();
 require("dotenv").config();
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
-const PORT = process.env.PORT || 5000;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false })); 
@@ -25,6 +24,7 @@ mongoose
 .connect(uri,{ useNewUrlParser: true , useUnifiedTopology: true }).then(()=> console.log("Mongo connection success")).catch(err => console.log("err"));
 
 
+const PORT = process.env.PORT || 5000;
 
 
 app.get("/", (req,res) => {
@@ -39,3 +39,5 @@ app.post("/user",(req,res) => {
     console.log("req.body");
     res.send(req.body);
 })
+
+app.use('/api/user/',require("./routes/api/user"));
