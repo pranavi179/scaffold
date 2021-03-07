@@ -1,0 +1,4 @@
+ Changes i made in featureB
+
+some common changes
+
