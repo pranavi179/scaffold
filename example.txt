@@ -1,4 +1,7 @@
+some common changes
+
 changes i made in branch featureA
 
-some common change
+changes i made in featureB
+
 
